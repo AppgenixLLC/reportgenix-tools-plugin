@@ -100,6 +100,61 @@ function reportgenix_load_tool_templates($template) {
 add_filter('template_include', 'reportgenix_load_tool_templates');
 
 /**
+ * Enqueue frontend styles
+ */
+function reportgenix_enqueue_frontend_styles() {
+    // Only load on tool post type pages
+    if (is_post_type_archive('tool') || is_singular('tool')) {
+        wp_enqueue_style(
+            'reportgenix-main-style',
+            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/main-style.css',
+            [],
+            REPORTGENIX_TOOLS_VERSION
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'reportgenix_enqueue_frontend_styles');
+
+/**
+ * Customize page title for tools archive
+ */
+function reportgenix_custom_archive_title($title) {
+    if (is_post_type_archive('tool')) {
+        $title = __('Free Shopify Tools & Calculators for Store Owners', 'reportgenix-tools');
+    }
+    return $title;
+}
+add_filter('pre_get_document_title', 'reportgenix_custom_archive_title');
+
+/**
+ * Add SEO meta tags for tools archive
+ */
+function reportgenix_add_meta_tags() {
+    if (is_post_type_archive('tool')) {
+        $meta_title = __('Free Shopify Tools & Calculators for Store Owners', 'reportgenix-tools');
+        $meta_description = __('Free tools and calculators built for Shopify merchants. Profit margin calculator, ROAS calculator, break-even analysis, pricing tools & more. No signup required.', 'reportgenix-tools');
+        $site_url = home_url('/tools/');
+        ?>
+        <meta name="description" content="<?php echo esc_attr($meta_description); ?>" />
+        <meta name="robots" content="index, follow" />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="<?php echo esc_url($site_url); ?>" />
+        <meta property="og:title" content="<?php echo esc_attr($meta_title); ?>" />
+        <meta property="og:description" content="<?php echo esc_attr($meta_description); ?>" />
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="<?php echo esc_url($site_url); ?>" />
+        <meta name="twitter:title" content="<?php echo esc_attr($meta_title); ?>" />
+        <meta name="twitter:description" content="<?php echo esc_attr($meta_description); ?>" />
+        <?php
+    }
+}
+add_action('wp_head', 'reportgenix_add_meta_tags', 1);
+
+/**
  * Register custom block category
  */
 function reportgenix_register_block_category($categories) {
