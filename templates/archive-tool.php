@@ -9,30 +9,24 @@ get_header();
 ?>
 
 <div id="primary" class="content-area">
-    <main id="main" class="site-main">
+    <main id="main" class="site-main reportgenix-tools-archive">
 
         <section class="hero">
             <div class="container">
-                <div class="hero__badge">
-                    <span class="hero__badge-count"><?php echo wp_count_posts('tool')->publish; ?></span>
-                    <?php _e('Free Tools Available', 'reportgenix-tools'); ?>
+                <div class="inner-wrap">
+                    <div class="hero__badge">
+                        <span class="hero__badge-count"><?php echo wp_count_posts('tool')->publish; ?></span>
+                        <?php _e('Free Tools Available', 'reportgenix-tools'); ?>
+                    </div>
+                    <h1><?php _e('Free Shopify Tools & Calculators for Store Owners', 'reportgenix-tools'); ?></h1>
+                    <p class="hero__subtitle"><?php _e('Free tools and calculators built for Shopify merchants. Profit margin calculator, ROAS calculator, break-even analysis, pricing tools & more. No signup required.', 'reportgenix-tools'); ?></p>
                 </div>
-                <h1><?php _e('Free', 'reportgenix-tools'); ?> <span class="highlight"><?php _e('Business Tools', 'reportgenix-tools'); ?></span> <?php _e('& Calculators', 'reportgenix-tools'); ?></h1>
-                <p class="hero__subtitle"><?php _e('Powerful calculators and tools to help freelancers, agencies, and ecommerce merchants run their businesses smarter. No signup required.', 'reportgenix-tools'); ?></p>
             </div>
         </section>
 
         <?php if (have_posts()) : ?>
             <section class="tools-section">
                 <div class="container">
-                    <div class="tools-section__header">
-                        <h2 class="tools-section__title">All Tools</h2>
-                        <span class="tools-section__count">
-                            <span id="toolCount"><?php echo $wp_query->found_posts; ?></span>
-                            <?php echo _n('tool', 'tools', $wp_query->found_posts, 'reportgenix-tools'); ?>
-                        </span>
-                    </div>
-
                     <div class="tools-grid">
                         <?php
                         while (have_posts()) : the_post();
@@ -90,5 +84,4 @@ get_header();
 </div>
 
 <?php
-get_sidebar();
 get_footer();
