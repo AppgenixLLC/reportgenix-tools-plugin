@@ -46,3 +46,38 @@
         font-weight: 700;
     }
 }
+
+/* Tool Card Styles */
+.tool-card__description {
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 12px 0;
+}
+
+.tool-card__features {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0 0;
+}
+
+.tool-card__features li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 8px;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.tool-card__features li:before {
+    content: "●";
+    position: absolute;
+    left: 0;
+    color: #6b5af7;
+    font-weight: bold;
+}
+
+.tool-card__features li:last-child {
+    margin-bottom: 0;
+}

@@ -45,8 +45,26 @@ get_header();
                                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                     </h3>
 
-                                    <?php if (has_excerpt()) : ?>
+                                    <?php
+                                    // Get custom meta fields
+                                    $short_description = get_post_meta(get_the_ID(), '_reportgenix_short_description', true);
+                                    $bullet_points = get_post_meta(get_the_ID(), '_reportgenix_bullet_points', true);
+
+                                    // Display short description if available, otherwise fall back to excerpt
+                                    if (!empty($short_description)) : ?>
+                                        <p class="tool-card__description"><?php echo esc_html($short_description); ?></p>
+                                    <?php elseif (has_excerpt()) : ?>
                                         <p class="tool-card__description"><?php echo get_the_excerpt(); ?></p>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($bullet_points) && is_array($bullet_points)) : ?>
+                                        <ul class="tool-card__features">
+                                            <?php foreach ($bullet_points as $point) : ?>
+                                                <?php if (!empty(trim($point))) : ?>
+                                                    <li><?php echo esc_html($point); ?></li>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </ul>
                                     <?php endif; ?>
                                 </div>
 

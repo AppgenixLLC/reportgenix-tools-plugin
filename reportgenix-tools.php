@@ -74,6 +74,211 @@ function reportgenix_register_tool_post_type() {
 add_action('init', 'reportgenix_register_tool_post_type');
 
 /**
+ * Register meta boxes for tool post type
+ */
+function reportgenix_add_tool_meta_boxes() {
+    add_meta_box(
+        'reportgenix_tool_details',
+        __('Tool Details', 'reportgenix-tools'),
+        'reportgenix_tool_details_callback',
+        'tool',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'reportgenix_add_tool_meta_boxes');
+
+/**
+ * Meta box callback function
+ */
+function reportgenix_tool_details_callback($post) {
+    // Add nonce for security
+    wp_nonce_field('reportgenix_tool_meta_box', 'reportgenix_tool_meta_box_nonce');
+
+    // Get existing values
+    $short_description = get_post_meta($post->ID, '_reportgenix_short_description', true);
+    $bullet_points = get_post_meta($post->ID, '_reportgenix_bullet_points', true);
+
+    // If bullet_points is empty, set default empty array
+    if (empty($bullet_points) || !is_array($bullet_points)) {
+        $bullet_points = ['', '', ''];
+    }
+    ?>
+
+    <div class="reportgenix-meta-fields">
+        <style>
+            .reportgenix-meta-fields .meta-field {
+                margin-bottom: 20px;
+            }
+            .reportgenix-meta-fields label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 8px;
+                color: #1d2327;
+            }
+            .reportgenix-meta-fields textarea,
+            .reportgenix-meta-fields input[type="text"] {
+                width: 100%;
+                padding: 8px 12px;
+                border: 1px solid #8c8f94;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+            .reportgenix-meta-fields textarea {
+                min-height: 100px;
+                resize: vertical;
+            }
+            .reportgenix-meta-fields .description {
+                color: #646970;
+                font-size: 13px;
+                margin-top: 5px;
+            }
+            .bullet-point-field {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+            .bullet-point-field span {
+                color: #2271b1;
+                font-weight: 600;
+                padding-top: 8px;
+            }
+            .bullet-point-field input {
+                flex: 1;
+            }
+            .add-bullet-point,
+            .remove-bullet-point {
+                margin-top: 10px;
+                cursor: pointer;
+            }
+            .remove-bullet-point {
+                color: #d63638;
+                text-decoration: none;
+                padding: 4px 8px;
+                border: 1px solid #d63638;
+                border-radius: 3px;
+                font-size: 12px;
+                background: #fff;
+            }
+            .remove-bullet-point:hover {
+                background: #d63638;
+                color: #fff;
+            }
+        </style>
+
+        <div class="meta-field">
+            <label for="reportgenix_short_description">
+                <?php _e('Short Description', 'reportgenix-tools'); ?>
+            </label>
+            <textarea
+                id="reportgenix_short_description"
+                name="reportgenix_short_description"
+                rows="4"
+            ><?php echo esc_textarea($short_description); ?></textarea>
+            <p class="description">
+                <?php _e('A brief description of the tool to display on the archive page (recommended: 120-150 characters).', 'reportgenix-tools'); ?>
+            </p>
+        </div>
+
+        <div class="meta-field">
+            <label><?php _e('Key Features (Bullet Points)', 'reportgenix-tools'); ?></label>
+            <div id="bullet-points-container">
+                <?php
+                foreach ($bullet_points as $index => $point) {
+                    ?>
+                    <div class="bullet-point-field">
+                        <span>●</span>
+                        <input
+                            type="text"
+                            name="reportgenix_bullet_points[]"
+                            value="<?php echo esc_attr($point); ?>"
+                            placeholder="<?php _e('Enter feature or benefit', 'reportgenix-tools'); ?>"
+                        />
+                        <?php if ($index > 0) : ?>
+                            <button type="button" class="remove-bullet-point" onclick="this.parentElement.remove()">
+                                <?php _e('Remove', 'reportgenix-tools'); ?>
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <button type="button" class="button add-bullet-point" id="add-bullet-point">
+                <?php _e('+ Add Bullet Point', 'reportgenix-tools'); ?>
+            </button>
+            <p class="description">
+                <?php _e('Add key features or benefits of this tool (recommended: 3-5 points).', 'reportgenix-tools'); ?>
+            </p>
+        </div>
+
+        <script>
+            document.getElementById('add-bullet-point').addEventListener('click', function() {
+                var container = document.getElementById('bullet-points-container');
+                var newField = document.createElement('div');
+                newField.className = 'bullet-point-field';
+                newField.innerHTML = '<span>●</span>' +
+                    '<input type="text" name="reportgenix_bullet_points[]" placeholder="<?php _e('Enter feature or benefit', 'reportgenix-tools'); ?>" />' +
+                    '<button type="button" class="remove-bullet-point" onclick="this.parentElement.remove()"><?php _e('Remove', 'reportgenix-tools'); ?></button>';
+                container.appendChild(newField);
+            });
+        </script>
+    </div>
+    <?php
+}
+
+/**
+ * Save meta box data
+ */
+function reportgenix_save_tool_meta($post_id) {
+    // Check if nonce is set
+    if (!isset($_POST['reportgenix_tool_meta_box_nonce'])) {
+        return;
+    }
+
+    // Verify nonce
+    if (!wp_verify_nonce($_POST['reportgenix_tool_meta_box_nonce'], 'reportgenix_tool_meta_box')) {
+        return;
+    }
+
+    // Check if this is an autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+
+    // Check user permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+
+    // Save short description
+    if (isset($_POST['reportgenix_short_description'])) {
+        update_post_meta(
+            $post_id,
+            '_reportgenix_short_description',
+            sanitize_textarea_field($_POST['reportgenix_short_description'])
+        );
+    }
+
+    // Save bullet points
+    if (isset($_POST['reportgenix_bullet_points'])) {
+        $bullet_points = array_map('sanitize_text_field', $_POST['reportgenix_bullet_points']);
+        // Remove empty values
+        $bullet_points = array_filter($bullet_points, function($value) {
+            return !empty(trim($value));
+        });
+        // Re-index array
+        $bullet_points = array_values($bullet_points);
+
+        update_post_meta($post_id, '_reportgenix_bullet_points', $bullet_points);
+    } else {
+        delete_post_meta($post_id, '_reportgenix_bullet_points');
+    }
+}
+add_action('save_post', 'reportgenix_save_tool_meta');
+
+/**
  * Load custom templates for tool post type
  */
 function reportgenix_load_tool_templates($template) {
