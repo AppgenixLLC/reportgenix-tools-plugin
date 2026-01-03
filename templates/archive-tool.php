@@ -14,11 +14,11 @@ get_header();
         <section class="hero">
             <div class="container">
                 <div class="hero__badge">
-                    <span class="hero__badge-count">12</span>
-                    Free Tools Available
+                    <span class="hero__badge-count"><?php echo wp_count_posts('tool')->publish; ?></span>
+                    <?php _e('Free Tools Available', 'reportgenix-tools'); ?>
                 </div>
-                <h1>Free <span class="highlight">Business Tools</span> & Calculators</h1>
-                <p class="hero__subtitle">Powerful calculators and tools to help freelancers, agencies, and ecommerce merchants run their businesses smarter. No signup required.</p>
+                <h1><?php _e('Free', 'reportgenix-tools'); ?> <span class="highlight"><?php _e('Business Tools', 'reportgenix-tools'); ?></span> <?php _e('& Calculators', 'reportgenix-tools'); ?></h1>
+                <p class="hero__subtitle"><?php _e('Powerful calculators and tools to help freelancers, agencies, and ecommerce merchants run their businesses smarter. No signup required.', 'reportgenix-tools'); ?></p>
             </div>
         </section>
 
@@ -27,35 +27,44 @@ get_header();
                 <div class="container">
                     <div class="tools-section__header">
                         <h2 class="tools-section__title">All Tools</h2>
-                        <span class="tools-section__count"><span id="toolCount">12</span> tools</span>
+                        <span class="tools-section__count">
+                            <span id="toolCount"><?php echo $wp_query->found_posts; ?></span>
+                            <?php echo _n('tool', 'tools', $wp_query->found_posts, 'reportgenix-tools'); ?>
+                        </span>
                     </div>
 
                     <div class="tools-grid">
-                        <!-- Coming Soon -->
-                        <div class="tool-card tool-card--disabled" data-category="freelance">
-                            <span class="tool-card__badge tool-card__badge--coming">Coming Soon</span>
-                            <div class="tool-card__header">
-                                <div class="tool-card__icon tool-card__icon--green">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        <line x1="16" y1="2" x2="16" y2="6"></line>
-                                        <line x1="8" y1="2" x2="8" y2="6"></line>
-                                        <line x1="3" y1="10" x2="21" y2="10"></line>
-                                    </svg>
+                        <?php
+                        while (have_posts()) : the_post();
+                            ?>
+                            <div class="tool-card">
+                                <div class="tool-card__header">
+                                    <?php if (has_post_thumbnail()) : ?>
+                                        <div class="tool-card__thumbnail">
+                                            <a href="<?php the_permalink(); ?>">
+                                                <?php the_post_thumbnail('medium', ['class' => 'tool-card__image']); ?>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <h3 class="tool-card__title">
+                                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                    </h3>
+
+                                    <?php if (has_excerpt()) : ?>
+                                        <p class="tool-card__description"><?php echo get_the_excerpt(); ?></p>
+                                    <?php endif; ?>
                                 </div>
-                                <h3 class="tool-card__title">Project Timeline Generator</h3>
-                                <p class="tool-card__description">Create visual project timelines with milestones and deliverables. Export as image or PDF for client presentations.</p>
-                            </div>
-                            <div class="tool-card__footer">
-                                <div class="tool-card__tags">
-                                    <span class="tool-card__tag">Freelance</span>
-                                    <span class="tool-card__tag">Planning</span>
+
+                                <div class="tool-card__footer">
+                                    <a href="<?php the_permalink(); ?>" class="tool-card__cta">
+                                        <?php _e('Use Tool', 'reportgenix-tools'); ?> →
+                                    </a>
                                 </div>
-                                <span class="tool-card__cta">
-                                Coming Soon
-                            </span>
                             </div>
-                        </div>
+                            <?php
+                        endwhile;
+                        ?>
                     </div>
                 </div>
             </section>
