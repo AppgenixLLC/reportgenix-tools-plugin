@@ -1,0 +1,230 @@
+/**
+ * Hero Section Block Styles
+ * Prefix: rptx- (Reportgenix Tools)
+ */
+
+/* Hero Section */
+.rptx-hero {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* CSS Variables for customizable colors */
+    --rptx-badge-color: #0a5f38;
+    --rptx-highlight-color: #fbbf24;
+    --rptx-button-color: #0a5f38;
+    --rptx-primary-color: #0a5f38;
+    /* CSS Variables for spacing */
+    --rptx-padding-top: 80px;
+    --rptx-padding-bottom: 60px;
+    --rptx-padding-top-tablet: 60px;
+    --rptx-padding-bottom-tablet: 40px;
+    --rptx-padding-top-mobile: 40px;
+    --rptx-padding-bottom-mobile: 30px;
+    /* Apply spacing - defaults to desktop */
+    padding: var(--rptx-padding-top) 0 var(--rptx-padding-bottom);
+}
+
+.rptx-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 140%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(10, 95, 56, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Custom Container */
+.custom-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.custom-container--full {
+    max-width: 100%;
+    padding: 0 40px;
+}
+
+/* Legacy support - keep old class for compatibility */
+.rptx-hero__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.rptx-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--rptx-badge-color) 0%, var(--rptx-badge-color) 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    animation: rptx-fadeInUp 0.6s ease;
+}
+
+.rptx-hero__badge svg {
+    width: 16px;
+    height: 16px;
+}
+
+.rptx-hero__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 20px;
+    color: #1a1a1a;
+    animation: rptx-fadeInUp 0.6s ease 0.1s backwards;
+}
+
+.rptx-hero__highlight {
+    color: var(--rptx-primary-color);
+    position: relative;
+}
+
+.rptx-hero__highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: var(--rptx-highlight-color);
+    opacity: 0.3;
+    z-index: -1;
+    border-radius: 4px;
+}
+
+.rptx-hero__subtitle {
+    font-size: 1.25rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+    animation: rptx-fadeInUp 0.6s ease 0.2s backwards;
+}
+
+/* Button Styles */
+.rptx-btn {
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+    line-height: 1.5;
+    animation: rptx-fadeInUp 0.6s ease 0.3s backwards;
+}
+
+.rptx-btn--primary {
+    background: linear-gradient(135deg, var(--rptx-button-color) 0%, var(--rptx-button-color) 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(10, 95, 56, 0.2);
+}
+
+.rptx-btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(10, 95, 56, 0.3);
+}
+
+.rptx-btn--large {
+    padding: 16px 40px;
+    font-size: 18px;
+}
+
+/* Hero Stats */
+.rptx-hero__stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+    animation: rptx-fadeInUp 0.6s ease 0.4s backwards;
+}
+
+.rptx-hero__stat {
+    text-align: center;
+}
+
+.rptx-hero__stat-value {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--rptx-primary-color);
+}
+
+.rptx-hero__stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Animations */
+@keyframes rptx-fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .rptx-hero {
+        padding: var(--rptx-padding-top-tablet) 0 var(--rptx-padding-bottom-tablet);
+    }
+
+    .rptx-hero__title {
+        font-size: 2rem;
+    }
+
+    .rptx-hero__subtitle {
+        font-size: 1.1rem;
+    }
+
+    .rptx-hero__stats {
+        gap: 32px;
+    }
+
+    .rptx-hero__stat-value {
+        font-size: 1.5rem;
+    }
+
+    .rptx-btn--large {
+        padding: 14px 32px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rptx-hero {
+        padding: var(--rptx-padding-top-mobile) 0 var(--rptx-padding-bottom-mobile);
+    }
+
+    .rptx-hero__stats {
+        gap: 24px;
+        flex-direction: column;
+    }
+
+    .rptx-hero__badge {
+        font-size: 12px;
+        padding: 6px 14px;
+    }
+}

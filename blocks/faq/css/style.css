@@ -1,0 +1,219 @@
+/**
+ * FAQ Block Styles
+ * Prefix: rptx- (Reportgenix Tools)
+ */
+
+/* FAQ Section */
+.rptx-faq {
+    background: var(--rptx-bg-color, #ffffff);
+    /* CSS Variables for spacing */
+    --rptx-padding-top: 80px;
+    --rptx-padding-bottom: 80px;
+    --rptx-padding-top-tablet: 60px;
+    --rptx-padding-bottom-tablet: 60px;
+    --rptx-padding-top-mobile: 40px;
+    --rptx-padding-bottom-mobile: 40px;
+    /* Apply spacing */
+    padding: var(--rptx-padding-top) 0 var(--rptx-padding-bottom);
+}
+
+/* Header */
+.rptx-faq__header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.rptx-faq__header h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 16px;
+    color: #1a1a1a;
+}
+
+.rptx-faq__header p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin: 0;
+    color: #4b5563;
+}
+
+/* FAQ List */
+.rptx-faq__list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* FAQ Item */
+.rptx-faq__item {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 24px 0;
+    transition: all 0.3s ease;
+}
+
+.rptx-faq__item:first-child {
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Question */
+.rptx-faq__question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 20px;
+    user-select: none;
+}
+
+.rptx-faq__question h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.5;
+    flex: 1;
+    margin: 0;
+    color: #1a1a1a;
+    transition: color 0.2s ease;
+}
+
+.rptx-faq__question:hover h3 {
+    color: var(--rptx-toggle-color, #0a5f38);
+}
+
+/* Toggle Button */
+.rptx-faq__toggle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.rptx-faq__toggle svg {
+    width: 16px;
+    height: 16px;
+    color: #6b7280;
+    transition: transform 0.3s ease;
+}
+
+.rptx-faq__item.active .rptx-faq__toggle {
+    background: var(--rptx-toggle-color, #0a5f38);
+}
+
+.rptx-faq__item.active .rptx-faq__toggle svg {
+    color: white;
+    transform: rotate(180deg);
+}
+
+/* Answer */
+.rptx-faq__answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.rptx-faq__item.active .rptx-faq__answer {
+    max-height: 800px;
+    padding-top: 16px;
+}
+
+.rptx-faq__answer p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin: 0;
+    color: #4b5563;
+}
+
+.rptx-faq__answer strong {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.rptx-faq__answer a {
+    color: var(--rptx-toggle-color, #0a5f38);
+    text-decoration: underline;
+}
+
+.rptx-faq__answer a:hover {
+    text-decoration: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .rptx-faq {
+        padding: var(--rptx-padding-top-tablet) 0 var(--rptx-padding-bottom-tablet);
+    }
+
+    .rptx-faq__header {
+        margin-bottom: 36px;
+    }
+
+    .rptx-faq__header h2 {
+        font-size: 1.5rem;
+    }
+
+    .rptx-faq__header p {
+        font-size: 1rem;
+    }
+
+    .rptx-faq__item {
+        padding: 20px 0;
+    }
+
+    .rptx-faq__question h3 {
+        font-size: 1.0625rem;
+    }
+
+    .rptx-faq__answer p {
+        font-size: 0.9375rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .rptx-faq {
+        padding: var(--rptx-padding-top-mobile) 0 var(--rptx-padding-bottom-mobile);
+    }
+
+    .rptx-faq__header {
+        margin-bottom: 28px;
+    }
+
+    .rptx-faq__header h2 {
+        font-size: 1.375rem;
+        margin-bottom: 12px;
+    }
+
+    .rptx-faq__header p {
+        font-size: 0.9375rem;
+    }
+
+    .rptx-faq__item {
+        padding: 18px 0;
+    }
+
+    .rptx-faq__question {
+        gap: 16px;
+    }
+
+    .rptx-faq__question h3 {
+        font-size: 1rem;
+    }
+
+    .rptx-faq__toggle {
+        width: 28px;
+        height: 28px;
+    }
+
+    .rptx-faq__toggle svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .rptx-faq__answer p {
+        font-size: 0.875rem;
+        line-height: 1.7;
+    }
+}

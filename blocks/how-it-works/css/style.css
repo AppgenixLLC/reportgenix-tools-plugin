@@ -1,0 +1,161 @@
+/**
+ * How It Works Block Styles
+ * Prefix: rptx- (Reportgenix Tools)
+ */
+
+/* How It Works Section */
+.rptx-how-it-works {
+    background: var(--rptx-bg-color, #ffffff);
+    /* CSS Variables for spacing */
+    --rptx-padding-top: 80px;
+    --rptx-padding-bottom: 80px;
+    --rptx-padding-top-tablet: 60px;
+    --rptx-padding-bottom-tablet: 60px;
+    --rptx-padding-top-mobile: 40px;
+    --rptx-padding-bottom-mobile: 40px;
+    /* Apply spacing */
+    padding: var(--rptx-padding-top) 0 var(--rptx-padding-bottom);
+}
+
+.rptx-how-it-works__header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.rptx-how-it-works__header h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 16px;
+    color: #1a1a1a;
+}
+
+.rptx-how-it-works__header p {
+    font-size: 1.125rem;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.rptx-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    position: relative;
+}
+
+.rptx-step {
+    text-align: center;
+    position: relative;
+}
+
+.rptx-step__number {
+    width: 64px;
+    height: 64px;
+    background: var(--rptx-number-color, #0a5f38);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto 20px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.rptx-step h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0 0 12px;
+    color: #1a1a1a;
+}
+
+.rptx-step p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+    color: #4b5563;
+}
+
+/* Connector line between steps (desktop only) */
+@media (min-width: 769px) {
+    .rptx-steps::before {
+        content: '';
+        position: absolute;
+        top: 32px;
+        left: 15%;
+        right: 15%;
+        height: 2px;
+        background: linear-gradient(to right, transparent 0%, #e5e7eb 20%, #e5e7eb 80%, transparent 100%);
+        z-index: 0;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .rptx-how-it-works {
+        padding: var(--rptx-padding-top-tablet) 0 var(--rptx-padding-bottom-tablet);
+    }
+
+    .rptx-how-it-works__header {
+        margin-bottom: 40px;
+    }
+
+    .rptx-how-it-works__header h2 {
+        font-size: 1.75rem;
+    }
+
+    .rptx-how-it-works__header p {
+        font-size: 1rem;
+    }
+
+    .rptx-steps {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .rptx-step__number {
+        width: 56px;
+        height: 56px;
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .rptx-how-it-works {
+        padding: var(--rptx-padding-top-mobile) 0 var(--rptx-padding-bottom-mobile);
+    }
+
+    .rptx-how-it-works__header {
+        margin-bottom: 32px;
+    }
+
+    .rptx-how-it-works__header h2 {
+        font-size: 1.5rem;
+    }
+
+    .rptx-steps {
+        gap: 28px;
+    }
+
+    .rptx-step__number {
+        width: 48px;
+        height: 48px;
+        font-size: 1.125rem;
+        margin-bottom: 16px;
+    }
+
+    .rptx-step h3 {
+        font-size: 1.125rem;
+    }
+
+    .rptx-step p {
+        font-size: 14px;
+    }
+}

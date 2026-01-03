@@ -100,6 +100,47 @@ function reportgenix_load_tool_templates($template) {
 add_filter('template_include', 'reportgenix_load_tool_templates');
 
 /**
+ * Register custom block category
+ */
+function reportgenix_register_block_category($categories) {
+    return array_merge(
+        [
+            [
+                'slug'  => 'reportgenix-blocks',
+                'title' => __('Reportgenix Blocks', 'reportgenix-tools'),
+                'icon'  => 'admin-tools',
+            ],
+        ],
+        $categories
+    );
+}
+add_filter('block_categories_all', 'reportgenix_register_block_category', 10, 1);
+
+/**
+ * Debug: Check if scripts are loaded (only for admin)
+ */
+function reportgenix_debug_scripts() {
+    if (is_admin()) {
+        global $wp_scripts;
+        error_log('Reportgenix: Plugin loaded');
+        error_log('Reportgenix: Block file path: ' . REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/hero-section/block.php');
+    }
+}
+add_action('admin_init', 'reportgenix_debug_scripts');
+
+/**
+ * Load Gutenberg blocks
+ */
+require_once REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/hero-section/block.php';
+require_once REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/features-grid/block.php';
+require_once REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/how-it-works/block.php';
+require_once REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/pros-cons/block.php';
+require_once REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/education/block.php';
+require_once REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/comparison-table/block.php';
+require_once REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/benchmarks/block.php';
+require_once REPORTGENIX_TOOLS_PLUGIN_DIR . 'blocks/faq/block.php';
+
+/**
  * Plugin activation
  */
 function reportgenix_tools_activate() {
