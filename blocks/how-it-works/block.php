@@ -72,7 +72,7 @@ function reportgenix_register_how_it_works_block() {
             ],
             'numberColor' => [
                 'type'    => 'string',
-                'default' => '#0a5f38',
+                'default' => '#6b5af7',
             ],
             'paddingTop' => [
                 'type'    => 'number',
@@ -114,7 +114,7 @@ function reportgenix_render_how_it_works_block($attributes) {
     // Get settings
     $full_width = isset($attributes['fullWidth']) ? $attributes['fullWidth'] : false;
     $bg_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '#ffffff';
-    $number_color = isset($attributes['numberColor']) ? esc_attr($attributes['numberColor']) : '#0a5f38';
+    $number_color = isset($attributes['numberColor']) ? esc_attr($attributes['numberColor']) : '#6b5af7';
 
     // Get spacing
     $padding_top = isset($attributes['paddingTop']) ? intval($attributes['paddingTop']) : 80;

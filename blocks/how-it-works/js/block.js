@@ -51,7 +51,7 @@
             },
             numberColor: {
                 type: 'string',
-                default: '#0a5f38'
+                default: '#6b5af7'
             },
             paddingTop: {
                 type: 'number',
@@ -210,7 +210,7 @@
                         el(ColorPalette, {
                             value: attributes.numberColor,
                             onChange: function(value) {
-                                setAttributes({ numberColor: value || '#0a5f38' });
+                                setAttributes({ numberColor: value || '#6b5af7' });
                             }
                         })
                     ),

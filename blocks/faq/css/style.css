@@ -76,7 +76,7 @@
 }
 
 .rptx-faq__question:hover h3 {
-    color: var(--rptx-toggle-color, #0a5f38);
+    color: var(--rptx-toggle-color, #6b5af7);
 }
 
 /* Toggle Button */
@@ -100,7 +100,7 @@
 }
 
 .rptx-faq__item.active .rptx-faq__toggle {
-    background: var(--rptx-toggle-color, #0a5f38);
+    background: var(--rptx-toggle-color, #6b5af7);
 }
 
 .rptx-faq__item.active .rptx-faq__toggle svg {
@@ -133,7 +133,7 @@
 }
 
 .rptx-faq__answer a {
-    color: var(--rptx-toggle-color, #0a5f38);
+    color: var(--rptx-toggle-color, #6b5af7);
     text-decoration: underline;
 }
 

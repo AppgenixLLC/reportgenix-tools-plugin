@@ -66,7 +66,7 @@
             },
             formulaBoxColor: {
                 type: 'string',
-                default: '#0a5f38'
+                default: '#6b5af7'
             },
             paddingTop: {
                 type: 'number',
@@ -274,7 +274,7 @@
                         el(ColorPalette, {
                             value: attributes.formulaBoxColor,
                             onChange: function(value) {
-                                setAttributes({ formulaBoxColor: value || '#0a5f38' });
+                                setAttributes({ formulaBoxColor: value || '#6b5af7' });
                             }
                         })
                     ),

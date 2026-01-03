@@ -57,7 +57,7 @@
             },
             headerBackgroundColor: {
                 type: 'string',
-                default: '#0a5f38'
+                default: '#6b5af7'
             },
             paddingTop: {
                 type: 'number',
@@ -165,7 +165,7 @@
                     ),
                     el(PanelBody, { title: __('Table Headers', 'reportgenix-tools'), initialOpen: false },
                         attributes.tableHeaders.map(function(header, index) {
-                            return el('div', { key: index, style: { marginBottom: '15px', padding: '12px', border: '1px solid #0a5f38', borderRadius: '4px', backgroundColor: '#f0fdf4' } },
+                            return el('div', { key: index, style: { marginBottom: '15px', padding: '12px', border: '1px solid #6b5af7', borderRadius: '4px', backgroundColor: '#f0fdf4' } },
                                 el('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' } },
                                     el('strong', {}, __('Column', 'reportgenix-tools') + ' ' + (index + 1)),
                                     attributes.tableHeaders.length > 1 && el(Button, {
@@ -244,7 +244,7 @@
                         el(ColorPalette, {
                             value: attributes.headerBackgroundColor,
                             onChange: function(value) {
-                                setAttributes({ headerBackgroundColor: value || '#0a5f38' });
+                                setAttributes({ headerBackgroundColor: value || '#6b5af7' });
                             }
                         })
                     ),

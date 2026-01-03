@@ -86,7 +86,7 @@ function reportgenix_register_education_block() {
             ],
             'formulaBoxColor' => [
                 'type'    => 'string',
-                'default' => '#0a5f38',
+                'default' => '#6b5af7',
             ],
             'paddingTop' => [
                 'type'    => 'number',
@@ -131,7 +131,7 @@ function reportgenix_render_education_block($attributes) {
     // Get settings
     $full_width = isset($attributes['fullWidth']) ? $attributes['fullWidth'] : false;
     $bg_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '#f9fafb';
-    $formula_box_color = isset($attributes['formulaBoxColor']) ? esc_attr($attributes['formulaBoxColor']) : '#0a5f38';
+    $formula_box_color = isset($attributes['formulaBoxColor']) ? esc_attr($attributes['formulaBoxColor']) : '#6b5af7';
 
     // Get spacing
     $padding_top = isset($attributes['paddingTop']) ? intval($attributes['paddingTop']) : 80;

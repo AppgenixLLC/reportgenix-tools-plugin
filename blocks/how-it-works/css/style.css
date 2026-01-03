@@ -53,7 +53,7 @@
 .rptx-step__number {
     width: 64px;
     height: 64px;
-    background: var(--rptx-number-color, #0a5f38);
+    background: var(--rptx-number-color, #6b5af7);
     color: white;
     border-radius: 50%;
     display: flex;

@@ -78,7 +78,7 @@ function reportgenix_register_comparison_table_block() {
             ],
             'headerBackgroundColor' => [
                 'type'    => 'string',
-                'default' => '#0a5f38',
+                'default' => '#6b5af7',
             ],
             'paddingTop' => [
                 'type'    => 'number',
@@ -122,7 +122,7 @@ function reportgenix_render_comparison_table_block($attributes) {
     $full_width = isset($attributes['fullWidth']) ? $attributes['fullWidth'] : false;
     $narrow_container = isset($attributes['narrowContainer']) ? $attributes['narrowContainer'] : true;
     $bg_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '#ffffff';
-    $header_bg_color = isset($attributes['headerBackgroundColor']) ? esc_attr($attributes['headerBackgroundColor']) : '#0a5f38';
+    $header_bg_color = isset($attributes['headerBackgroundColor']) ? esc_attr($attributes['headerBackgroundColor']) : '#6b5af7';
 
     // Get spacing
     $padding_top = isset($attributes['paddingTop']) ? intval($attributes['paddingTop']) : 80;

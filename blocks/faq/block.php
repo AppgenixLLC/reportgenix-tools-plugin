@@ -65,7 +65,7 @@ function reportgenix_register_faq_block() {
             ],
             'toggleColor' => [
                 'type'    => 'string',
-                'default' => '#0a5f38',
+                'default' => '#6b5af7',
             ],
             'paddingTop' => [
                 'type'    => 'number',
@@ -107,7 +107,7 @@ function reportgenix_render_faq_block($attributes) {
     // Get settings
     $full_width = isset($attributes['fullWidth']) ? $attributes['fullWidth'] : false;
     $bg_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '#ffffff';
-    $toggle_color = isset($attributes['toggleColor']) ? esc_attr($attributes['toggleColor']) : '#0a5f38';
+    $toggle_color = isset($attributes['toggleColor']) ? esc_attr($attributes['toggleColor']) : '#6b5af7';
 
     // Get spacing
     $padding_top = isset($attributes['paddingTop']) ? intval($attributes['paddingTop']) : 80;

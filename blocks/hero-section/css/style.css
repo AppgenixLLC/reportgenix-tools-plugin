@@ -9,10 +9,10 @@
     position: relative;
     overflow: hidden;
     /* CSS Variables for customizable colors */
-    --rptx-badge-color: #0a5f38;
+    --rptx-badge-color: #6b5af7;
     --rptx-highlight-color: #fbbf24;
-    --rptx-button-color: #0a5f38;
-    --rptx-primary-color: #0a5f38;
+    --rptx-button-color: #6b5af7;
+    --rptx-primary-color: #6b5af7;
     /* CSS Variables for spacing */
     --rptx-padding-top: 80px;
     --rptx-padding-bottom: 60px;

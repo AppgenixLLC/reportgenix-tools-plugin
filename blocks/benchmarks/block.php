@@ -70,7 +70,7 @@ function reportgenix_register_benchmarks_block() {
             ],
             'rangeColor' => [
                 'type'    => 'string',
-                'default' => '#0a5f38',
+                'default' => '#6b5af7',
             ],
             'paddingTop' => [
                 'type'    => 'number',
@@ -113,7 +113,7 @@ function reportgenix_render_benchmarks_block($attributes) {
     $full_width = isset($attributes['fullWidth']) ? $attributes['fullWidth'] : false;
     $bg_color = isset($attributes['backgroundColor']) ? esc_attr($attributes['backgroundColor']) : '#f9fafb';
     $card_bg_color = isset($attributes['cardBackgroundColor']) ? esc_attr($attributes['cardBackgroundColor']) : '#ffffff';
-    $range_color = isset($attributes['rangeColor']) ? esc_attr($attributes['rangeColor']) : '#0a5f38';
+    $range_color = isset($attributes['rangeColor']) ? esc_attr($attributes['rangeColor']) : '#6b5af7';
 
     // Get spacing
     $padding_top = isset($attributes['paddingTop']) ? intval($attributes['paddingTop']) : 80;

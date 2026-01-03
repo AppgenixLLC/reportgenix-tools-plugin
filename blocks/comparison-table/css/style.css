@@ -62,7 +62,7 @@
 
 /* Table Header */
 .rptx-comparison__table th {
-    background: var(--rptx-header-bg-color, #0a5f38);
+    background: var(--rptx-header-bg-color, #6b5af7);
     color: white;
     font-weight: 600;
     font-size: 15px;

@@ -51,7 +51,7 @@
             },
             rangeColor: {
                 type: 'string',
-                default: '#0a5f38'
+                default: '#6b5af7'
             },
             paddingTop: {
                 type: 'number',
@@ -128,7 +128,7 @@
                     ),
                     el(PanelBody, { title: __('Benchmarks', 'reportgenix-tools'), initialOpen: false },
                         attributes.benchmarks.map(function(benchmark, index) {
-                            return el('div', { key: index, style: { marginBottom: '20px', padding: '15px', border: '1px solid #0a5f38', borderRadius: '4px', backgroundColor: '#f0fdf4' } },
+                            return el('div', { key: index, style: { marginBottom: '20px', padding: '15px', border: '1px solid #6b5af7', borderRadius: '4px', backgroundColor: '#f0fdf4' } },
                                 el('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } },
                                     el('strong', {}, __('Benchmark', 'reportgenix-tools') + ' ' + (index + 1)),
                                     el(Button, {
@@ -239,7 +239,7 @@
                         el(ColorPalette, {
                             value: attributes.rangeColor,
                             onChange: function(value) {
-                                setAttributes({ rangeColor: value || '#0a5f38' });
+                                setAttributes({ rangeColor: value || '#6b5af7' });
                             }
                         })
                     ),

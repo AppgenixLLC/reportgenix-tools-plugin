@@ -95,7 +95,7 @@ function reportgenix_register_hero_block() {
             ],
             'badgeColor' => [
                 'type'    => 'string',
-                'default' => '#0a5f38',
+                'default' => '#6b5af7',
             ],
             'highlightColor' => [
                 'type'    => 'string',
@@ -103,11 +103,11 @@ function reportgenix_register_hero_block() {
             ],
             'buttonColor' => [
                 'type'    => 'string',
-                'default' => '#0a5f38',
+                'default' => '#6b5af7',
             ],
             'primaryColor' => [
                 'type'    => 'string',
-                'default' => '#0a5f38',
+                'default' => '#6b5af7',
             ],
             'paddingTop' => [
                 'type'    => 'number',
@@ -151,10 +151,10 @@ function reportgenix_render_hero_block($attributes) {
 
     // Get color settings
     $full_width = isset($attributes['fullWidth']) ? $attributes['fullWidth'] : false;
-    $badge_color = isset($attributes['badgeColor']) ? esc_attr($attributes['badgeColor']) : '#0a5f38';
+    $badge_color = isset($attributes['badgeColor']) ? esc_attr($attributes['badgeColor']) : '#6b5af7';
     $highlight_color = isset($attributes['highlightColor']) ? esc_attr($attributes['highlightColor']) : '#fbbf24';
-    $button_color = isset($attributes['buttonColor']) ? esc_attr($attributes['buttonColor']) : '#0a5f38';
-    $primary_color = isset($attributes['primaryColor']) ? esc_attr($attributes['primaryColor']) : '#0a5f38';
+    $button_color = isset($attributes['buttonColor']) ? esc_attr($attributes['buttonColor']) : '#6b5af7';
+    $primary_color = isset($attributes['primaryColor']) ? esc_attr($attributes['primaryColor']) : '#6b5af7';
 
     // Get spacing settings
     $padding_top = isset($attributes['paddingTop']) ? intval($attributes['paddingTop']) : 80;

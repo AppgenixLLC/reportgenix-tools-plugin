@@ -55,7 +55,7 @@
 .rptx-feature-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    border-color: var(--rptx-primary-color, #0a5f38);
+    border-color: var(--rptx-primary-color, #6b5af7);
 }
 
 .rptx-feature-card__icon {
@@ -73,7 +73,7 @@
 .rptx-feature-card__icon svg {
     width: 28px;
     height: 28px;
-    color: var(--rptx-primary-color, #0a5f38);
+    color: var(--rptx-primary-color, #6b5af7);
     flex-shrink: 0;
 }
 
