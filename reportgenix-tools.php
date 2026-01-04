@@ -289,7 +289,7 @@ function reportgenix_load_tool_templates($template) {
         // Force enqueue styles when template loads
         wp_enqueue_style(
             'reportgenix-tools-main-style',
-            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/main-style.css',
+            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/reportgenix-tools-main.css',
             [],
             REPORTGENIX_TOOLS_VERSION,
             'all'
@@ -306,7 +306,7 @@ function reportgenix_load_tool_templates($template) {
         // Force enqueue styles when template loads
         wp_enqueue_style(
             'reportgenix-tools-main-style',
-            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/main-style.css',
+            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/reportgenix-tools-main.css',
             [],
             REPORTGENIX_TOOLS_VERSION,
             'all'
@@ -340,7 +340,7 @@ function reportgenix_enqueue_frontend_styles() {
     if ($is_tool_archive || $is_tool_single) {
         wp_enqueue_style(
             'reportgenix-tools-main-style',
-            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/main-style.css',
+            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/reportgenix-tools-main.css',
             [],
             REPORTGENIX_TOOLS_VERSION,
             'all'

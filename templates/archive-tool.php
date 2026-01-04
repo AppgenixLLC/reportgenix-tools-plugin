@@ -6,11 +6,7 @@
  */
 
 get_header();
-
-// Force load CSS directly in template
-$css_url = plugins_url('assets/public/css/main-style.css', dirname(__FILE__));
 ?>
-<link rel="stylesheet" href="<?php echo esc_url($css_url); ?>?ver=<?php echo REPORTGENIX_TOOLS_VERSION; ?>" media="all">
 
 <div id="primary" class="content-area">
     <main id="main" class="site-main reportgenix-tools-archive">
