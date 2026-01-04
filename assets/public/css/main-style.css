@@ -45,6 +45,7 @@
         color: #fff;
         font-weight: 700;
     }
+
 }
 
 /* Tools Grid Layout */
@@ -62,9 +63,12 @@
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-    padding: 24px;
     transition: all 0.3s ease;
     height: 100%;
+    .title-wrap{
+        background: #F5F3EE;
+        padding: 24px;
+    }
 }
 
 .tool-card:hover {
@@ -95,7 +99,7 @@
 }
 
 .tool-card__title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     line-height: 1.4;
     margin: 0 0 12px 0;
@@ -113,15 +117,15 @@
 
 .tool-card__description {
     color: #4b5563;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
     margin: 12px 0;
 }
 
 .tool-card__features {
     list-style: none;
-    padding: 0;
     margin: 16px 0 0 0;
+    padding: 24px;
 }
 
 .tool-card__features li {
@@ -149,22 +153,31 @@
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid #f3f4f6;
+    padding: 24px;
 }
 
 .tool-card__cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #6b5af7;
     font-weight: 600;
     font-size: 15px;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.2s
+    ease;
+    text-align: center;
+    width: 100%;
+    display: block;
+    border: 1px solid #e2e2e2e2;
+    border-radius: 30px;
+    padding: 10px;
+    color: #353535;
 }
 
 .tool-card__cta:hover {
     gap: 12px;
     color: #5848d9;
+    border-color: #5848d9;
+}
+.tools-section{
+    margin-bottom: 120px;
 }
 
 /* Responsive Styles */

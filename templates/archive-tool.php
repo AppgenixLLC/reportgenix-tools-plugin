@@ -33,29 +33,31 @@ get_header();
                             ?>
                             <div class="tool-card">
                                 <div class="tool-card__header">
-                                    <?php if (has_post_thumbnail()) : ?>
-                                        <div class="tool-card__thumbnail">
-                                            <a href="<?php the_permalink(); ?>">
-                                                <?php the_post_thumbnail('medium', ['class' => 'tool-card__image']); ?>
-                                            </a>
-                                        </div>
-                                    <?php endif; ?>
+<!--                                    --><?php //if (has_post_thumbnail()) : ?>
+<!--                                        <div class="tool-card__thumbnail">-->
+<!--                                            <a href="--><?php //the_permalink(); ?><!--">-->
+<!--                                                --><?php //the_post_thumbnail('medium', ['class' => 'tool-card__image']); ?>
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    --><?php //endif; ?>
 
-                                    <h3 class="tool-card__title">
-                                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                    </h3>
+                                    <div class="title-wrap">
+                                        <h3 class="tool-card__title">
+                                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                        </h3>
 
-                                    <?php
-                                    // Get custom meta fields
-                                    $short_description = get_post_meta(get_the_ID(), '_reportgenix_short_description', true);
-                                    $bullet_points = get_post_meta(get_the_ID(), '_reportgenix_bullet_points', true);
+                                        <?php
+                                        // Get custom meta fields
+                                        $short_description = get_post_meta(get_the_ID(), '_reportgenix_short_description', true);
+                                        $bullet_points = get_post_meta(get_the_ID(), '_reportgenix_bullet_points', true);
 
-                                    // Display short description if available, otherwise fall back to excerpt
-                                    if (!empty($short_description)) : ?>
-                                        <p class="tool-card__description"><?php echo esc_html($short_description); ?></p>
-                                    <?php elseif (has_excerpt()) : ?>
-                                        <p class="tool-card__description"><?php echo get_the_excerpt(); ?></p>
-                                    <?php endif; ?>
+                                        // Display short description if available, otherwise fall back to excerpt
+                                        if (!empty($short_description)) : ?>
+                                            <p class="tool-card__description"><?php echo esc_html($short_description); ?></p>
+                                        <?php elseif (has_excerpt()) : ?>
+                                            <p class="tool-card__description"><?php echo get_the_excerpt(); ?></p>
+                                        <?php endif; ?>
+                                    </div>
 
                                     <?php if (!empty($bullet_points) && is_array($bullet_points)) : ?>
                                         <ul class="tool-card__features">
@@ -70,7 +72,7 @@ get_header();
 
                                 <div class="tool-card__footer">
                                     <a href="<?php the_permalink(); ?>" class="tool-card__cta">
-                                        <?php _e('Use Tool', 'reportgenix-tools'); ?> →
+                                        <?php printf('Use %s Tool',  get_the_title()); ?> →
                                     </a>
                                 </div>
                             </div>
