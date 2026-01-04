@@ -286,6 +286,15 @@ function reportgenix_load_tool_templates($template) {
 
     // Single tool template
     if (is_singular('tool')) {
+        // Force enqueue styles when template loads
+        wp_enqueue_style(
+            'reportgenix-tools-main-style',
+            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/main-style.css',
+            [],
+            REPORTGENIX_TOOLS_VERSION,
+            'all'
+        );
+
         $plugin_template = REPORTGENIX_TOOLS_PLUGIN_DIR . 'templates/single-tool.php';
         if (file_exists($plugin_template)) {
             return $plugin_template;
@@ -294,6 +303,15 @@ function reportgenix_load_tool_templates($template) {
 
     // Archive tools template
     if (is_post_type_archive('tool')) {
+        // Force enqueue styles when template loads
+        wp_enqueue_style(
+            'reportgenix-tools-main-style',
+            REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/main-style.css',
+            [],
+            REPORTGENIX_TOOLS_VERSION,
+            'all'
+        );
+
         $plugin_template = REPORTGENIX_TOOLS_PLUGIN_DIR . 'templates/archive-tool.php';
         if (file_exists($plugin_template)) {
             return $plugin_template;
@@ -308,17 +326,28 @@ add_filter('template_include', 'reportgenix_load_tool_templates');
  * Enqueue frontend styles
  */
 function reportgenix_enqueue_frontend_styles() {
-    // Only load on tool post type pages
-    if (is_post_type_archive('tool') || is_singular('tool')) {
+    // Check if we're on a tool post type page
+    $is_tool_archive = is_post_type_archive('tool');
+    $is_tool_single = is_singular('tool');
+
+    // Also check via query var for better compatibility
+    global $wp_query;
+    if (isset($wp_query->query_vars['post_type']) && $wp_query->query_vars['post_type'] === 'tool') {
+        $is_tool_archive = true;
+    }
+
+    // Enqueue styles on tool pages
+    if ($is_tool_archive || $is_tool_single) {
         wp_enqueue_style(
-            'reportgenix-main-style',
+            'reportgenix-tools-main-style',
             REPORTGENIX_TOOLS_PLUGIN_URL . 'assets/public/css/main-style.css',
             [],
-            REPORTGENIX_TOOLS_VERSION
+            REPORTGENIX_TOOLS_VERSION,
+            'all'
         );
     }
 }
-add_action('wp_enqueue_scripts', 'reportgenix_enqueue_frontend_styles');
+add_action('wp_enqueue_scripts', 'reportgenix_enqueue_frontend_styles', 10);
 
 /**
  * Customize page title for tools archive
