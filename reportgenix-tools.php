@@ -22,29 +22,8 @@ if (!defined('ABSPATH')) {
 // Define plugin constants
 define('REPORTGENIX_TOOLS_VERSION', '1.1.1');
 define('REPORTGENIX_TOOLS_PLUGIN_DIR', plugin_dir_path(__FILE__));
-
-// Force HTTPS for plugin URL if site is accessed over HTTPS
-$plugin_url = plugins_url('/', __FILE__);
-if (is_ssl() || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) {
-    $plugin_url = str_replace('http://', 'https://', $plugin_url);
-}
-define('REPORTGENIX_TOOLS_PLUGIN_URL', $plugin_url);
-
+define('REPORTGENIX_TOOLS_PLUGIN_URL', plugins_url('/', __FILE__));
 define('REPORTGENIX_TOOLS_PLUGIN_FILE', __FILE__);
-
-/**
- * Force HTTPS for all plugin assets when site is accessed over HTTPS
- */
-function reportgenix_force_https_assets($url) {
-    if (is_ssl() || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) {
-        if (strpos($url, REPORTGENIX_TOOLS_PLUGIN_DIR) !== false || strpos($url, 'reportgenix') !== false) {
-            $url = str_replace('http://', 'https://', $url);
-        }
-    }
-    return $url;
-}
-add_filter('script_loader_src', 'reportgenix_force_https_assets', 20);
-add_filter('style_loader_src', 'reportgenix_force_https_assets', 20);
 
 /**
  * Register custom post type
