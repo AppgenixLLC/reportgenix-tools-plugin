@@ -357,8 +357,51 @@
             ];
         },
 
-        save: function() {
-            return null;
+        save: function(props) {
+            var attributes = props.attributes;
+            var RichTextContent = blockEditor.RichText.Content;
+
+            return el('section', {
+                className: 'rptx-benchmarks',
+                style: {
+                    '--rptx-bg-color': attributes.backgroundColor,
+                    '--rptx-card-bg-color': attributes.cardBackgroundColor,
+                    '--rptx-range-color': attributes.rangeColor,
+                    '--rptx-padding-top': attributes.paddingTop + 'px',
+                    '--rptx-padding-bottom': attributes.paddingBottom + 'px'
+                }
+            },
+                el('div', {
+                    className: attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container'
+                },
+                    el('div', { className: 'rptx-benchmarks__header' },
+                        el(RichTextContent, {
+                            tagName: 'h2',
+                            value: attributes.title
+                        }),
+                        el(RichTextContent, {
+                            tagName: 'p',
+                            value: attributes.subtitle
+                        })
+                    ),
+                    el('div', { className: 'rptx-benchmarks__grid' },
+                        attributes.benchmarks.map(function(benchmark, index) {
+                            var showIcon = benchmark.showIcon !== undefined ? benchmark.showIcon : true;
+                            var iconType = benchmark.iconType || 'emoji';
+
+                            return el('div', { key: index, className: 'rptx-benchmark-card' },
+                                showIcon && el('div', { className: 'rptx-benchmark-card__icon' },
+                                    iconType === 'image' && benchmark.iconImage ?
+                                        el('img', { src: benchmark.iconImage, alt: benchmark.title }) :
+                                        benchmark.icon
+                                ),
+                                el('h4', {}, benchmark.title),
+                                el('div', { className: 'rptx-benchmark-card__range' }, benchmark.range)
+                            );
+                        })
+                    )
+                )
+            );
         }
     });
 })(

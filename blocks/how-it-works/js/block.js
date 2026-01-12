@@ -2,6 +2,7 @@
     var el = element.createElement;
     var registerBlockType = blocks.registerBlockType;
     var InspectorControls = blockEditor.InspectorControls;
+    var RichText = blockEditor.RichText;
     var PanelBody = components.PanelBody;
     var TextControl = components.TextControl;
     var TextareaControl = components.TextareaControl;
@@ -289,15 +290,43 @@
                         className: attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container'
                     },
                         el('div', { className: 'rptx-how-it-works__header' },
-                            el('h2', {}, attributes.title),
-                            el('p', {}, attributes.subtitle)
+                            el(RichText, {
+                                tagName: 'h2',
+                                value: attributes.title,
+                                onChange: function(value) {
+                                    setAttributes({ title: value });
+                                },
+                                placeholder: __('Enter section title...', 'reportgenix-tools')
+                            }),
+                            el(RichText, {
+                                tagName: 'p',
+                                value: attributes.subtitle,
+                                onChange: function(value) {
+                                    setAttributes({ subtitle: value });
+                                },
+                                placeholder: __('Enter subtitle...', 'reportgenix-tools')
+                            })
                         ),
                         el('div', { className: 'rptx-steps' },
                             attributes.steps.map(function(step, index) {
                                 return el('div', { key: index, className: 'rptx-step' },
                                     el('div', { className: 'rptx-step__number' }, index + 1),
-                                    el('h3', {}, step.title),
-                                    el('p', {}, step.description)
+                                    el(RichText, {
+                                        tagName: 'h3',
+                                        value: step.title,
+                                        onChange: function(value) {
+                                            updateStep(index, 'title', value);
+                                        },
+                                        placeholder: __('Step title...', 'reportgenix-tools')
+                                    }),
+                                    el(RichText, {
+                                        tagName: 'p',
+                                        value: step.description,
+                                        onChange: function(value) {
+                                            updateStep(index, 'description', value);
+                                        },
+                                        placeholder: __('Step description...', 'reportgenix-tools')
+                                    })
                                 );
                             })
                         )
@@ -306,8 +335,52 @@
             ];
         },
 
-        save: function() {
-            return null;
+        save: function(props) {
+            var attributes = props.attributes;
+
+            return el('section', {
+                className: 'rptx-how-it-works',
+                style: {
+                    '--rptx-bg-color': attributes.backgroundColor,
+                    '--rptx-number-color': attributes.numberColor,
+                    '--rptx-padding-top': attributes.paddingTop + 'px',
+                    '--rptx-padding-bottom': attributes.paddingBottom + 'px',
+                    '--rptx-padding-top-tablet': attributes.paddingTopTablet + 'px',
+                    '--rptx-padding-bottom-tablet': attributes.paddingBottomTablet + 'px',
+                    '--rptx-padding-top-mobile': attributes.paddingTopMobile + 'px',
+                    '--rptx-padding-bottom-mobile': attributes.paddingBottomMobile + 'px'
+                }
+            },
+                el('div', {
+                    className: attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container'
+                },
+                    el('div', { className: 'rptx-how-it-works__header' },
+                        el(RichText.Content, {
+                            tagName: 'h2',
+                            value: attributes.title
+                        }),
+                        el(RichText.Content, {
+                            tagName: 'p',
+                            value: attributes.subtitle
+                        })
+                    ),
+                    el('div', { className: 'rptx-steps' },
+                        attributes.steps.map(function(step, index) {
+                            return el('div', { key: index, className: 'rptx-step' },
+                                el('div', { className: 'rptx-step__number' }, index + 1),
+                                el(RichText.Content, {
+                                    tagName: 'h3',
+                                    value: step.title
+                                }),
+                                el(RichText.Content, {
+                                    tagName: 'p',
+                                    value: step.description
+                                })
+                            );
+                        })
+                    )
+                )
+            );
         }
     });
 })(

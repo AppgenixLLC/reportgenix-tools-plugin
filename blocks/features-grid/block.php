@@ -35,7 +35,6 @@ function reportgenix_register_features_block() {
     register_block_type('reportgenix/features-grid', [
         'editor_script' => 'reportgenix-features-block-editor',
         'style'         => 'reportgenix-features-block-style',
-        'render_callback' => 'reportgenix_render_features_block',
         'attributes'    => [
             'title' => [
                 'type'    => 'string',

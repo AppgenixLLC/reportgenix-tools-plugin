@@ -39,7 +39,6 @@ function reportgenix_register_hero_block() {
     register_block_type('reportgenix/hero-section', [
         'editor_script' => 'reportgenix-hero-block-editor',
         'style'         => 'reportgenix-hero-block-style',
-        'render_callback' => 'reportgenix_render_hero_block',
         'attributes'    => [
             'badge' => [
                 'type'    => 'string',

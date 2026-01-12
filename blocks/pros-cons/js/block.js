@@ -2,6 +2,7 @@
     var el = element.createElement;
     var registerBlockType = blocks.registerBlockType;
     var InspectorControls = blockEditor.InspectorControls;
+    var RichText = blockEditor.RichText;
     var PanelBody = components.PanelBody;
     var TextControl = components.TextControl;
     var TextareaControl = components.TextareaControl;
@@ -269,8 +270,22 @@
                 },
                     el('div', { className: attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container' },
                         el('div', { className: 'rptx-pros-cons__header' },
-                            el('h2', {}, attributes.title),
-                            el('p', {}, attributes.subtitle)
+                            el(RichText, {
+                                tagName: 'h2',
+                                value: attributes.title,
+                                onChange: function(value) {
+                                    setAttributes({ title: value });
+                                },
+                                placeholder: __('Enter section title...', 'reportgenix-tools')
+                            }),
+                            el(RichText, {
+                                tagName: 'p',
+                                value: attributes.subtitle,
+                                onChange: function(value) {
+                                    setAttributes({ subtitle: value });
+                                },
+                                placeholder: __('Enter subtitle...', 'reportgenix-tools')
+                            })
                         ),
                         el('div', { className: 'rptx-pros-cons__grid' },
                             el('div', { className: 'rptx-pros-cons__card rptx-pros-cons__card--pros' },
@@ -280,15 +295,36 @@
                                             el('polyline', { points: '20 6 9 17 4 12' })
                                         )
                                     ),
-                                    el('h3', {}, attributes.prosTitle)
+                                    el(RichText, {
+                                        tagName: 'h3',
+                                        value: attributes.prosTitle,
+                                        onChange: function(value) {
+                                            setAttributes({ prosTitle: value });
+                                        },
+                                        placeholder: __('Pros', 'reportgenix-tools')
+                                    })
                                 ),
                                 el('ul', { className: 'rptx-pros-cons__list' },
                                     attributes.pros.map(function(pro, index) {
                                         return el('li', { key: index },
                                             el('span', { className: 'rptx-pros-cons__bullet rptx-pros-cons__bullet--pros' }, '✓'),
                                             el('div', {},
-                                                el('strong', {}, pro.title),
-                                                el('p', {}, pro.description)
+                                                el(RichText, {
+                                                    tagName: 'strong',
+                                                    value: pro.title,
+                                                    onChange: function(value) {
+                                                        updatePro(index, 'title', value);
+                                                    },
+                                                    placeholder: __('Pro title...', 'reportgenix-tools')
+                                                }),
+                                                el(RichText, {
+                                                    tagName: 'p',
+                                                    value: pro.description,
+                                                    onChange: function(value) {
+                                                        updatePro(index, 'description', value);
+                                                    },
+                                                    placeholder: __('Pro description...', 'reportgenix-tools')
+                                                })
                                             )
                                         );
                                     })
@@ -302,15 +338,36 @@
                                             el('line', { x1: '6', y1: '6', x2: '18', y2: '18' })
                                         )
                                     ),
-                                    el('h3', {}, attributes.consTitle)
+                                    el(RichText, {
+                                        tagName: 'h3',
+                                        value: attributes.consTitle,
+                                        onChange: function(value) {
+                                            setAttributes({ consTitle: value });
+                                        },
+                                        placeholder: __('Cons', 'reportgenix-tools')
+                                    })
                                 ),
                                 el('ul', { className: 'rptx-pros-cons__list' },
                                     attributes.cons.map(function(con, index) {
                                         return el('li', { key: index },
                                             el('span', { className: 'rptx-pros-cons__bullet rptx-pros-cons__bullet--cons' }, '✗'),
                                             el('div', {},
-                                                el('strong', {}, con.title),
-                                                el('p', {}, con.description)
+                                                el(RichText, {
+                                                    tagName: 'strong',
+                                                    value: con.title,
+                                                    onChange: function(value) {
+                                                        updateCon(index, 'title', value);
+                                                    },
+                                                    placeholder: __('Con title...', 'reportgenix-tools')
+                                                }),
+                                                el(RichText, {
+                                                    tagName: 'p',
+                                                    value: con.description,
+                                                    onChange: function(value) {
+                                                        updateCon(index, 'description', value);
+                                                    },
+                                                    placeholder: __('Con description...', 'reportgenix-tools')
+                                                })
                                             )
                                         );
                                     })
@@ -320,8 +377,22 @@
                         attributes.showVerdict && el('div', { className: 'rptx-pros-cons__verdict' },
                             el('div', { className: 'rptx-pros-cons__verdict-icon' }, attributes.verdictIcon),
                             el('div', { className: 'rptx-pros-cons__verdict-content' },
-                                el('h4', {}, attributes.verdictTitle),
-                                el('p', {}, attributes.verdictText)
+                                el(RichText, {
+                                    tagName: 'h4',
+                                    value: attributes.verdictTitle,
+                                    onChange: function(value) {
+                                        setAttributes({ verdictTitle: value });
+                                    },
+                                    placeholder: __('Verdict title...', 'reportgenix-tools')
+                                }),
+                                el(RichText, {
+                                    tagName: 'p',
+                                    value: attributes.verdictText,
+                                    onChange: function(value) {
+                                        setAttributes({ verdictText: value });
+                                    },
+                                    placeholder: __('Verdict text...', 'reportgenix-tools')
+                                })
                             )
                         )
                     )
@@ -329,8 +400,87 @@
             ];
         },
 
-        save: function() {
-            return null;
+        save: function(props) {
+            var attributes = props.attributes;
+
+            var sectionStyle = {
+                '--rptx-bg-color': attributes.backgroundColor,
+                '--rptx-pros-color': attributes.prosColor,
+                '--rptx-cons-color': attributes.consColor,
+                '--rptx-verdict-bg-color': attributes.verdictBackgroundColor,
+                '--rptx-padding-top': attributes.paddingTop + 'px',
+                '--rptx-padding-bottom': attributes.paddingBottom + 'px',
+                '--rptx-padding-top-tablet': attributes.paddingTopTablet + 'px',
+                '--rptx-padding-bottom-tablet': attributes.paddingBottomTablet + 'px',
+                '--rptx-padding-top-mobile': attributes.paddingTopMobile + 'px',
+                '--rptx-padding-bottom-mobile': attributes.paddingBottomMobile + 'px'
+            };
+
+            var containerClass = attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container';
+
+            return el('section', {
+                className: 'rptx-pros-cons',
+                style: sectionStyle
+            },
+                el('div', { className: containerClass },
+                    (attributes.title || attributes.subtitle) && el('div', { className: 'rptx-pros-cons__header' },
+                        attributes.title && el('h2', {}, attributes.title),
+                        attributes.subtitle && el('p', {}, attributes.subtitle)
+                    ),
+                    el('div', { className: 'rptx-pros-cons__grid' },
+                        el('div', { className: 'rptx-pros-cons__card rptx-pros-cons__card--pros' },
+                            el('div', { className: 'rptx-pros-cons__card-header' },
+                                el('div', { className: 'rptx-pros-cons__icon rptx-pros-cons__icon--pros' },
+                                    el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2.5' },
+                                        el('polyline', { points: '20 6 9 17 4 12' })
+                                    )
+                                ),
+                                el('h3', {}, attributes.prosTitle)
+                            ),
+                            el('ul', { className: 'rptx-pros-cons__list' },
+                                attributes.pros.map(function(pro, index) {
+                                    return el('li', { key: index },
+                                        el('span', { className: 'rptx-pros-cons__bullet rptx-pros-cons__bullet--pros' }, '✓'),
+                                        el('div', {},
+                                            el('strong', {}, pro.title),
+                                            el('p', {}, pro.description)
+                                        )
+                                    );
+                                })
+                            )
+                        ),
+                        el('div', { className: 'rptx-pros-cons__card rptx-pros-cons__card--cons' },
+                            el('div', { className: 'rptx-pros-cons__card-header' },
+                                el('div', { className: 'rptx-pros-cons__icon rptx-pros-cons__icon--cons' },
+                                    el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2.5' },
+                                        el('line', { x1: '18', y1: '6', x2: '6', y2: '18' }),
+                                        el('line', { x1: '6', y1: '6', x2: '18', y2: '18' })
+                                    )
+                                ),
+                                el('h3', {}, attributes.consTitle)
+                            ),
+                            el('ul', { className: 'rptx-pros-cons__list' },
+                                attributes.cons.map(function(con, index) {
+                                    return el('li', { key: index },
+                                        el('span', { className: 'rptx-pros-cons__bullet rptx-pros-cons__bullet--cons' }, '✗'),
+                                        el('div', {},
+                                            el('strong', {}, con.title),
+                                            el('p', {}, con.description)
+                                        )
+                                    );
+                                })
+                            )
+                        )
+                    ),
+                    attributes.showVerdict && (attributes.verdictTitle || attributes.verdictText) && el('div', { className: 'rptx-pros-cons__verdict' },
+                        el('div', { className: 'rptx-pros-cons__verdict-icon' }, attributes.verdictIcon),
+                        el('div', { className: 'rptx-pros-cons__verdict-content' },
+                            attributes.verdictTitle && el('h4', {}, attributes.verdictTitle),
+                            attributes.verdictText && el('p', {}, attributes.verdictText)
+                        )
+                    )
+                )
+            );
         }
     });
 })(

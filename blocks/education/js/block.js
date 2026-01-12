@@ -403,8 +403,65 @@
             ];
         },
 
-        save: function() {
-            return null;
+        save: function(props) {
+            var attributes = props.attributes;
+
+            var sectionStyle = {
+                '--rptx-bg-color': attributes.backgroundColor,
+                '--rptx-formula-box-color': attributes.formulaBoxColor,
+                '--rptx-padding-top': attributes.paddingTop + 'px',
+                '--rptx-padding-bottom': attributes.paddingBottom + 'px',
+                '--rptx-padding-top-tablet': attributes.paddingTopTablet + 'px',
+                '--rptx-padding-bottom-tablet': attributes.paddingBottomTablet + 'px',
+                '--rptx-padding-top-mobile': attributes.paddingTopMobile + 'px',
+                '--rptx-padding-bottom-mobile': attributes.paddingBottomMobile + 'px'
+            };
+
+            var containerClass = attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container';
+
+            return el('section', {
+                className: 'rptx-education',
+                style: sectionStyle
+            },
+                el('div', { className: containerClass },
+                    el('div', { className: 'rptx-education__grid' },
+                        el('div', { className: 'rptx-education__content' },
+                            attributes.title && el(RichText.Content, {
+                                tagName: 'h2',
+                                value: attributes.title
+                            }),
+                            attributes.content.map(function(paragraph, index) {
+                                return el(RichText.Content, {
+                                    key: index,
+                                    tagName: 'p',
+                                    value: paragraph
+                                });
+                            })
+                        ),
+                        el('div', { className: 'rptx-education__formula' },
+                            attributes.formulaTitle && el('h3', {}, attributes.formulaTitle),
+                            attributes.formulaText && el('div', { className: 'rptx-formula-box' }, attributes.formulaText),
+                            attributes.exampleData.length > 0 && el('div', { className: 'rptx-formula-example' },
+                                attributes.exampleTitle && el('h4', {}, attributes.exampleTitle),
+                                el('div', { className: 'rptx-example-data' },
+                                    attributes.exampleData.map(function(row, index) {
+                                        if (!row.label && !row.value) {
+                                            return el('div', { key: index, className: 'rptx-example-spacer' });
+                                        }
+                                        return el('div', {
+                                            key: index,
+                                            className: 'rptx-example-row' + (row.bold ? ' rptx-example-row--bold' : '')
+                                        },
+                                            row.label && el('span', { className: 'rptx-example-label' }, row.label),
+                                            row.value && el('span', { className: 'rptx-example-value' }, row.value)
+                                        );
+                                    })
+                                )
+                            )
+                        )
+                    )
+                )
+            );
         }
     });
 })(

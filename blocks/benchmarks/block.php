@@ -35,7 +35,6 @@ function reportgenix_register_benchmarks_block() {
     register_block_type('reportgenix/benchmarks', [
         'editor_script' => 'reportgenix-benchmarks-block-editor',
         'style'         => 'reportgenix-benchmarks-block-style',
-        'render_callback' => 'reportgenix_render_benchmarks_block',
         'attributes'    => [
             'title' => [
                 'type'    => 'string',

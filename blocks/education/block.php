@@ -35,7 +35,6 @@ function reportgenix_register_education_block() {
     register_block_type('reportgenix/education', [
         'editor_script' => 'reportgenix-education-block-editor',
         'style'         => 'reportgenix-education-block-style',
-        'render_callback' => 'reportgenix_render_education_block',
         'attributes'    => [
             'title' => [
                 'type'    => 'string',

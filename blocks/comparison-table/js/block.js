@@ -366,8 +366,55 @@
             ];
         },
 
-        save: function() {
-            return null;
+        save: function(props) {
+            var attributes = props.attributes;
+            var RichTextContent = blockEditor.RichText.Content;
+
+            return el('section', {
+                className: 'rptx-comparison',
+                style: {
+                    '--rptx-bg-color': attributes.backgroundColor,
+                    '--rptx-header-bg-color': attributes.headerBackgroundColor,
+                    '--rptx-padding-top': attributes.paddingTop + 'px',
+                    '--rptx-padding-bottom': attributes.paddingBottom + 'px'
+                }
+            },
+                el('div', {
+                    className: (attributes.fullWidth ? 'custom-container custom-container--full' :
+                               (attributes.narrowContainer ? 'custom-container custom-container--narrow' : 'custom-container'))
+                },
+                    el('div', { className: 'rptx-comparison__header' },
+                        el(RichTextContent, {
+                            tagName: 'h2',
+                            value: attributes.title
+                        }),
+                        el(RichTextContent, {
+                            tagName: 'p',
+                            value: attributes.subtitle
+                        })
+                    ),
+                    el('div', { className: 'rptx-comparison__table' },
+                        el('table', {},
+                            el('thead', {},
+                                el('tr', {},
+                                    attributes.tableHeaders.map(function(header, index) {
+                                        return el('th', { key: index }, header);
+                                    })
+                                )
+                            ),
+                            el('tbody', {},
+                                attributes.tableRows.map(function(row, rowIndex) {
+                                    return el('tr', { key: rowIndex },
+                                        row.map(function(cell, cellIndex) {
+                                            return el('td', { key: cellIndex }, cell);
+                                        })
+                                    );
+                                })
+                            )
+                        )
+                    )
+                )
+            );
         }
     });
 })(

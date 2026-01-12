@@ -2,6 +2,7 @@
     var el = element.createElement;
     var registerBlockType = blocks.registerBlockType;
     var InspectorControls = blockEditor.InspectorControls;
+    var RichText = blockEditor.RichText;
     var MediaUpload = blockEditor.MediaUpload;
     var PanelBody = components.PanelBody;
     var TextControl = components.TextControl;
@@ -375,8 +376,22 @@
                         className: attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container'
                     },
                         el('div', { className: 'rptx-features__header' },
-                            el('h2', {}, attributes.title),
-                            el('p', {}, attributes.subtitle)
+                            el(RichText, {
+                                tagName: 'h2',
+                                value: attributes.title,
+                                onChange: function(value) {
+                                    setAttributes({ title: value });
+                                },
+                                placeholder: __('Enter section title...', 'reportgenix-tools')
+                            }),
+                            el(RichText, {
+                                tagName: 'p',
+                                value: attributes.subtitle,
+                                onChange: function(value) {
+                                    setAttributes({ subtitle: value });
+                                },
+                                placeholder: __('Enter subtitle...', 'reportgenix-tools')
+                            })
                         ),
                         el('div', { className: 'rptx-features__grid' },
                             attributes.features.map(function(feature, index) {
@@ -389,8 +404,22 @@
                                             ? el('img', { src: feature.iconImage, alt: feature.title, style: { width: '100%', height: '100%', objectFit: 'contain' } })
                                             : getIcon(feature.icon || 'chart')
                                     ),
-                                    el('h3', {}, feature.title),
-                                    el('p', {}, feature.description)
+                                    el(RichText, {
+                                        tagName: 'h3',
+                                        value: feature.title,
+                                        onChange: function(value) {
+                                            updateFeature(index, 'title', value);
+                                        },
+                                        placeholder: __('Feature title...', 'reportgenix-tools')
+                                    }),
+                                    el(RichText, {
+                                        tagName: 'p',
+                                        value: feature.description,
+                                        onChange: function(value) {
+                                            updateFeature(index, 'description', value);
+                                        },
+                                        placeholder: __('Feature description...', 'reportgenix-tools')
+                                    })
                                 );
                             })
                         )
@@ -399,8 +428,92 @@
             ];
         },
 
-        save: function() {
-            return null;
+        save: function(props) {
+            var attributes = props.attributes;
+
+            // Helper to get icon SVG
+            function getIconSVG(iconName) {
+                var icons = {
+                    dollar: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+                        el('path', { d: 'M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' })
+                    ),
+                    card: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+                        el('rect', { x: '1', y: '3', width: '22', height: '18', rx: '2' }),
+                        el('line', { x1: '1', y1: '9', x2: '23', y2: '9' })
+                    ),
+                    chart: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+                        el('path', { d: 'M21.21 15.89A10 10 0 1 1 8 2.83' }),
+                        el('path', { d: 'M22 12A10 10 0 0 0 12 2v10z' })
+                    ),
+                    document: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+                        el('path', { d: 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z' }),
+                        el('polyline', { points: '14 2 14 8 20 8' }),
+                        el('line', { x1: '16', y1: '13', x2: '8', y2: '13' }),
+                        el('line', { x1: '16', y1: '17', x2: '8', y2: '17' })
+                    ),
+                    trending: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+                        el('polyline', { points: '23 6 13.5 15.5 8.5 10.5 1 18' }),
+                        el('polyline', { points: '17 6 23 6 23 12' })
+                    ),
+                    monitor: el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+                        el('rect', { x: '2', y: '3', width: '20', height: '14', rx: '2' }),
+                        el('line', { x1: '8', y1: '21', x2: '16', y2: '21' }),
+                        el('line', { x1: '12', y1: '17', x2: '12', y2: '21' })
+                    )
+                };
+                return icons[iconName] || icons.chart;
+            }
+
+            return el('section', {
+                className: 'rptx-features',
+                style: {
+                    '--rptx-bg-color': attributes.backgroundColor,
+                    '--rptx-primary-color': attributes.primaryColor,
+                    '--rptx-padding-top': attributes.paddingTop + 'px',
+                    '--rptx-padding-bottom': attributes.paddingBottom + 'px',
+                    '--rptx-padding-top-tablet': attributes.paddingTopTablet + 'px',
+                    '--rptx-padding-bottom-tablet': attributes.paddingBottomTablet + 'px',
+                    '--rptx-padding-top-mobile': attributes.paddingTopMobile + 'px',
+                    '--rptx-padding-bottom-mobile': attributes.paddingBottomMobile + 'px'
+                }
+            },
+                el('div', {
+                    className: attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container'
+                },
+                    el('div', { className: 'rptx-features__header' },
+                        el(RichText.Content, {
+                            tagName: 'h2',
+                            value: attributes.title
+                        }),
+                        el(RichText.Content, {
+                            tagName: 'p',
+                            value: attributes.subtitle
+                        })
+                    ),
+                    el('div', { className: 'rptx-features__grid' },
+                        attributes.features.map(function(feature, index) {
+                            var showIcon = typeof feature.showIcon !== 'undefined' ? feature.showIcon : true;
+                            var iconType = feature.iconType || 'svg';
+
+                            return el('article', { key: index, className: 'rptx-feature-card' },
+                                showIcon && el('div', { className: 'rptx-feature-card__icon' },
+                                    iconType === 'image' && feature.iconImage
+                                        ? el('img', { src: feature.iconImage, alt: feature.title, style: { width: '100%', height: '100%', objectFit: 'contain' } })
+                                        : getIconSVG(feature.icon || 'chart')
+                                ),
+                                el(RichText.Content, {
+                                    tagName: 'h3',
+                                    value: feature.title
+                                }),
+                                el(RichText.Content, {
+                                    tagName: 'p',
+                                    value: feature.description
+                                })
+                            );
+                        })
+                    )
+                )
+            );
         }
     });
 })(

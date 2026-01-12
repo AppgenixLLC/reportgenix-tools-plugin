@@ -31,11 +31,20 @@ function reportgenix_register_faq_block() {
         REPORTGENIX_TOOLS_VERSION
     );
 
+    // Register frontend script for FAQ toggle functionality
+    wp_register_script(
+        'reportgenix-faq-block-frontend',
+        REPORTGENIX_TOOLS_PLUGIN_URL . 'blocks/faq/js/frontend.js',
+        [],
+        REPORTGENIX_TOOLS_VERSION,
+        true
+    );
+
     // Register block
     register_block_type('reportgenix/faq', [
         'editor_script' => 'reportgenix-faq-block-editor',
         'style'         => 'reportgenix-faq-block-style',
-        'render_callback' => 'reportgenix_render_faq_block',
+        'script'        => 'reportgenix-faq-block-frontend',
         'attributes'    => [
             'title' => [
                 'type'    => 'string',
@@ -201,18 +210,6 @@ function reportgenix_render_faq_block($attributes) {
             </script>
         <?php endif; ?>
     </section>
-
-    <script>
-    (function() {
-        var faqToggles = document.querySelectorAll('[data-faq-toggle]');
-        faqToggles.forEach(function(toggle) {
-            toggle.addEventListener('click', function() {
-                var item = this.closest('[data-faq-item]');
-                item.classList.toggle('active');
-            });
-        });
-    })();
-    </script>
     <?php
     return ob_get_clean();
 }

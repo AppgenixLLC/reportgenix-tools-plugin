@@ -35,7 +35,6 @@ function reportgenix_register_how_it_works_block() {
     register_block_type('reportgenix/how-it-works', [
         'editor_script' => 'reportgenix-how-it-works-block-editor',
         'style'         => 'reportgenix-how-it-works-block-style',
-        'render_callback' => 'reportgenix_render_how_it_works_block',
         'attributes'    => [
             'title' => [
                 'type'    => 'string',

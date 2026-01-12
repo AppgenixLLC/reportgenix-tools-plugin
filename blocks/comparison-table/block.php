@@ -35,7 +35,6 @@ function reportgenix_register_comparison_table_block() {
     register_block_type('reportgenix/comparison-table', [
         'editor_script' => 'reportgenix-comparison-table-block-editor',
         'style'         => 'reportgenix-comparison-table-block-style',
-        'render_callback' => 'reportgenix_render_comparison_table_block',
         'attributes'    => [
             'title' => [
                 'type'    => 'string',

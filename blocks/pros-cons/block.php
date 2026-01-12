@@ -35,7 +35,6 @@ function reportgenix_register_pros_cons_block() {
     register_block_type('reportgenix/pros-cons', [
         'editor_script' => 'reportgenix-pros-cons-block-editor',
         'style'         => 'reportgenix-pros-cons-block-style',
-        'render_callback' => 'reportgenix_render_pros_cons_block',
         'attributes'    => [
             'title' => [
                 'type'    => 'string',

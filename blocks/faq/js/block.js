@@ -344,8 +344,105 @@
             ];
         },
 
-        save: function() {
-            return null;
+        save: function(props) {
+            var attributes = props.attributes;
+
+            var sectionStyle = {
+                '--rptx-bg-color': attributes.backgroundColor,
+                '--rptx-toggle-color': attributes.toggleColor,
+                '--rptx-padding-top': attributes.paddingTop + 'px',
+                '--rptx-padding-bottom': attributes.paddingBottom + 'px',
+                '--rptx-padding-top-tablet': attributes.paddingTopTablet + 'px',
+                '--rptx-padding-bottom-tablet': attributes.paddingBottomTablet + 'px',
+                '--rptx-padding-top-mobile': attributes.paddingTopMobile + 'px',
+                '--rptx-padding-bottom-mobile': attributes.paddingBottomMobile + 'px'
+            };
+
+            var containerClass = attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container';
+
+            // Build Schema.org FAQ JSON-LD
+            var schemaItems = [];
+            attributes.faqItems.forEach(function(item) {
+                if (item.question && item.answer) {
+                    schemaItems.push({
+                        '@type': 'Question',
+                        'name': item.question.replace(/<[^>]*>/g, ''),
+                        'acceptedAnswer': {
+                            '@type': 'Answer',
+                            'text': item.answer.replace(/<[^>]*>/g, '')
+                        }
+                    });
+                }
+            });
+
+            var schemaMarkup = {
+                '@context': 'https://schema.org',
+                '@type': 'FAQPage',
+                'mainEntity': schemaItems
+            };
+
+            return el('section', {
+                className: 'rptx-faq',
+                style: sectionStyle
+            },
+                el('div', { className: containerClass },
+                    (attributes.title || attributes.subtitle) && el('div', { className: 'rptx-faq__header' },
+                        attributes.title && el(RichText.Content, {
+                            tagName: 'h2',
+                            value: attributes.title
+                        }),
+                        attributes.subtitle && el(RichText.Content, {
+                            tagName: 'p',
+                            value: attributes.subtitle
+                        })
+                    ),
+                    attributes.faqItems.length > 0 && el('div', { className: 'rptx-faq__list' },
+                        attributes.faqItems.map(function(item, index) {
+                            var itemClass = 'rptx-faq__item';
+                            if (item.isOpen) {
+                                itemClass += ' active';
+                            }
+                            return el('div', {
+                                key: index,
+                                className: itemClass,
+                                'data-faq-item': true
+                            },
+                                el('div', {
+                                    className: 'rptx-faq__question',
+                                    'data-faq-toggle': true
+                                },
+                                    el(RichText.Content, {
+                                        tagName: 'h3',
+                                        value: item.question
+                                    }),
+                                    el('div', { className: 'rptx-faq__toggle' },
+                                        el('svg', {
+                                            viewBox: '0 0 24 24',
+                                            fill: 'none',
+                                            stroke: 'currentColor',
+                                            strokeWidth: '2'
+                                        },
+                                            el('polyline', { points: '6 9 12 15 18 9' })
+                                        )
+                                    )
+                                ),
+                                el('div', { className: 'rptx-faq__answer' },
+                                    el(RichText.Content, {
+                                        tagName: 'p',
+                                        value: item.answer
+                                    })
+                                )
+                            );
+                        })
+                    )
+                ),
+                schemaItems.length > 0 && el('script', {
+                    type: 'application/ld+json',
+                    dangerouslySetInnerHTML: {
+                        __html: JSON.stringify(schemaMarkup)
+                    }
+                })
+            );
         }
     });
 })(

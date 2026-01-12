@@ -333,33 +333,116 @@
                     el('div', {
                         className: attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container'
                     },
-                        el('span', { className: 'rptx-hero__badge' },
-                            el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+                        el('span', { className: 'rptx-hero__badge', style: { display: 'inline-flex', alignItems: 'center', gap: '8px' } },
+                            el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', style: { width: '16px', height: '16px' } },
                                 el('polyline', { points: '20 6 9 17 4 12' })
                             ),
-                            attributes.badge
+                            el(RichText, {
+                                tagName: 'span',
+                                value: attributes.badge,
+                                onChange: function(value) {
+                                    setAttributes({ badge: value });
+                                },
+                                placeholder: __('Badge text...', 'reportgenix-tools'),
+                                style: { display: 'inline' }
+                            })
                         ),
-                        el('h1', {
+                        el(RichText, {
+                            tagName: 'h1',
                             className: 'rptx-hero__title',
-                            dangerouslySetInnerHTML: { __html: getTitleWithHighlight(attributes.title, attributes.highlightText) }
+                            value: attributes.title,
+                            onChange: function(value) {
+                                setAttributes({ title: value });
+                            },
+                            placeholder: __('Enter hero title...', 'reportgenix-tools')
                         }),
-                        el('p', { className: 'rptx-hero__subtitle' }, attributes.subtitle),
+                        el('p', { style: { fontSize: '11px', color: '#666', marginTop: '-10px', marginBottom: '10px' } },
+                            __('Tip: Set "Highlight Text" in sidebar to highlight part of the title', 'reportgenix-tools')
+                        ),
+                        el(RichText, {
+                            tagName: 'p',
+                            className: 'rptx-hero__subtitle',
+                            value: attributes.subtitle,
+                            onChange: function(value) {
+                                setAttributes({ subtitle: value });
+                            },
+                            placeholder: __('Enter subtitle...', 'reportgenix-tools')
+                        }),
                         el('a', {
-                            href: attributes.buttonLink,
-                            className: 'rptx-btn rptx-btn--primary rptx-btn--large'
-                        }, attributes.buttonText),
+                            href: '#',
+                            className: 'rptx-btn rptx-btn--primary rptx-btn--large',
+                            style: { pointerEvents: 'none', display: 'inline-flex', alignItems: 'center' }
+                        },
+                            el(RichText, {
+                                tagName: 'span',
+                                value: attributes.buttonText,
+                                onChange: function(value) {
+                                    setAttributes({ buttonText: value });
+                                },
+                                placeholder: __('Button text...', 'reportgenix-tools'),
+                                style: { display: 'inline' }
+                            })
+                        ),
                         el('div', { className: 'rptx-hero__stats' },
                             el('div', { className: 'rptx-hero__stat' },
-                                el('div', { className: 'rptx-hero__stat-value' }, attributes.stat1Value),
-                                el('div', { className: 'rptx-hero__stat-label' }, attributes.stat1Label)
+                                el(RichText, {
+                                    tagName: 'div',
+                                    className: 'rptx-hero__stat-value',
+                                    value: attributes.stat1Value,
+                                    onChange: function(value) {
+                                        setAttributes({ stat1Value: value });
+                                    },
+                                    placeholder: __('Value', 'reportgenix-tools')
+                                }),
+                                el(RichText, {
+                                    tagName: 'div',
+                                    className: 'rptx-hero__stat-label',
+                                    value: attributes.stat1Label,
+                                    onChange: function(value) {
+                                        setAttributes({ stat1Label: value });
+                                    },
+                                    placeholder: __('Label', 'reportgenix-tools')
+                                })
                             ),
                             el('div', { className: 'rptx-hero__stat' },
-                                el('div', { className: 'rptx-hero__stat-value' }, attributes.stat2Value),
-                                el('div', { className: 'rptx-hero__stat-label' }, attributes.stat2Label)
+                                el(RichText, {
+                                    tagName: 'div',
+                                    className: 'rptx-hero__stat-value',
+                                    value: attributes.stat2Value,
+                                    onChange: function(value) {
+                                        setAttributes({ stat2Value: value });
+                                    },
+                                    placeholder: __('Value', 'reportgenix-tools')
+                                }),
+                                el(RichText, {
+                                    tagName: 'div',
+                                    className: 'rptx-hero__stat-label',
+                                    value: attributes.stat2Label,
+                                    onChange: function(value) {
+                                        setAttributes({ stat2Label: value });
+                                    },
+                                    placeholder: __('Label', 'reportgenix-tools')
+                                })
                             ),
                             el('div', { className: 'rptx-hero__stat' },
-                                el('div', { className: 'rptx-hero__stat-value' }, attributes.stat3Value),
-                                el('div', { className: 'rptx-hero__stat-label' }, attributes.stat3Label)
+                                el(RichText, {
+                                    tagName: 'div',
+                                    className: 'rptx-hero__stat-value',
+                                    value: attributes.stat3Value,
+                                    onChange: function(value) {
+                                        setAttributes({ stat3Value: value });
+                                    },
+                                    placeholder: __('Value', 'reportgenix-tools')
+                                }),
+                                el(RichText, {
+                                    tagName: 'div',
+                                    className: 'rptx-hero__stat-label',
+                                    value: attributes.stat3Label,
+                                    onChange: function(value) {
+                                        setAttributes({ stat3Label: value });
+                                    },
+                                    placeholder: __('Label', 'reportgenix-tools')
+                                })
                             )
                         )
                     )
@@ -367,9 +450,105 @@
             ];
         },
 
-        save: function() {
-            // Dynamic block - rendered via PHP
-            return null;
+        save: function(props) {
+            var attributes = props.attributes;
+
+            // Helper function to highlight text in title
+            function getTitleWithHighlight(title, highlight) {
+                if (!highlight || !title || title.indexOf(highlight) === -1) {
+                    return title;
+                }
+                return title.replace(highlight, '<span class="rptx-hero__highlight">' + highlight + '</span>');
+            }
+
+            // Get title with highlight applied
+            var titleWithHighlight = getTitleWithHighlight(attributes.title, attributes.highlightText);
+
+            return el('section', {
+                className: 'rptx-hero',
+                style: {
+                    '--rptx-badge-color': attributes.badgeColor,
+                    '--rptx-highlight-color': attributes.highlightColor,
+                    '--rptx-button-color': attributes.buttonColor,
+                    '--rptx-primary-color': attributes.primaryColor,
+                    '--rptx-padding-top': attributes.paddingTop + 'px',
+                    '--rptx-padding-bottom': attributes.paddingBottom + 'px',
+                    '--rptx-padding-top-tablet': attributes.paddingTopTablet + 'px',
+                    '--rptx-padding-bottom-tablet': attributes.paddingBottomTablet + 'px',
+                    '--rptx-padding-top-mobile': attributes.paddingTopMobile + 'px',
+                    '--rptx-padding-bottom-mobile': attributes.paddingBottomMobile + 'px'
+                }
+            },
+                el('div', {
+                    className: attributes.fullWidth ? 'custom-container custom-container--full' : 'custom-container'
+                },
+                    el('span', { className: 'rptx-hero__badge' },
+                        el('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+                            el('polyline', { points: '20 6 9 17 4 12' })
+                        ),
+                        el(RichText.Content, {
+                            tagName: 'span',
+                            value: attributes.badge
+                        })
+                    ),
+                    el('h1', {
+                        className: 'rptx-hero__title',
+                        dangerouslySetInnerHTML: { __html: titleWithHighlight }
+                    }),
+                    el(RichText.Content, {
+                        tagName: 'p',
+                        className: 'rptx-hero__subtitle',
+                        value: attributes.subtitle
+                    }),
+                    el('a', {
+                        href: attributes.buttonLink,
+                        className: 'rptx-btn rptx-btn--primary rptx-btn--large'
+                    },
+                        el(RichText.Content, {
+                            tagName: 'span',
+                            value: attributes.buttonText
+                        })
+                    ),
+                    el('div', { className: 'rptx-hero__stats' },
+                        el('div', { className: 'rptx-hero__stat' },
+                            el(RichText.Content, {
+                                tagName: 'div',
+                                className: 'rptx-hero__stat-value',
+                                value: attributes.stat1Value
+                            }),
+                            el(RichText.Content, {
+                                tagName: 'div',
+                                className: 'rptx-hero__stat-label',
+                                value: attributes.stat1Label
+                            })
+                        ),
+                        el('div', { className: 'rptx-hero__stat' },
+                            el(RichText.Content, {
+                                tagName: 'div',
+                                className: 'rptx-hero__stat-value',
+                                value: attributes.stat2Value
+                            }),
+                            el(RichText.Content, {
+                                tagName: 'div',
+                                className: 'rptx-hero__stat-label',
+                                value: attributes.stat2Label
+                            })
+                        ),
+                        el('div', { className: 'rptx-hero__stat' },
+                            el(RichText.Content, {
+                                tagName: 'div',
+                                className: 'rptx-hero__stat-value',
+                                value: attributes.stat3Value
+                            }),
+                            el(RichText.Content, {
+                                tagName: 'div',
+                                className: 'rptx-hero__stat-label',
+                                value: attributes.stat3Label
+                            })
+                        )
+                    )
+                )
+            );
         }
     });
 })(
